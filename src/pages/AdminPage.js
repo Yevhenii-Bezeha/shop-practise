@@ -1,11 +1,14 @@
 import React from "react";
-import AdvForm from "../Components/admin/AdvForm";
 import Section from "../Components/section/Section";
-const AdminPage = ({ addNewAdv }) => {
+import AdvForm from "../Components/admin/AdvForm";
+
+const AdminPage = ({ data }) => {
   return (
-    <Section title="Добавление нового объявления">
-      <AdvForm addNewAdv={addNewAdv} />
-    </Section>
+    <>
+      <Section title="Добавление нового объявления">
+        <AdvForm addNewAdv={data.addNewAdv} />
+      </Section>
+    </>
   );
 };
 

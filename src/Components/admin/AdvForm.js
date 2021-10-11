@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { AdvFormContainer } from "./AdvFormStyled";
+import { v4 as uuidv4 } from "uuid";
 import { createNewAdv } from "../../services/api";
 
 const productCategories = ["phones", "laptops"];
@@ -9,7 +10,7 @@ const initialState = {
   name: "",
   image: "",
   description: "",
-  price: "",
+  price: 0,
   isSale: false,
 };
 
@@ -26,10 +27,10 @@ class AdvForm extends Component {
     }
     this.setState({ [name]: value });
   };
-  onHandleSubmit = async (e) => {
+  onHandleSubmit = (e) => {
     e.preventDefault();
     const { category, name, image, description, price, isSale } = this.state;
-    const response = await createNewAdv(category, { ...this.state });
+    const response = createNewAdv(this.state.category, { ...this.state });
     this.props.addNewAdv(category, {
       name,
       image,
@@ -126,3 +127,10 @@ class AdvForm extends Component {
 }
 
 export default AdvForm;
+
+const arr = [
+  [100, 200],
+  [300, 500],
+];
+const [, [, y2]] = arr;
+console.log(y2);

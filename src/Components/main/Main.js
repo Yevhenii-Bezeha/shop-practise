@@ -1,21 +1,18 @@
-import React, { Component } from "react";
-import { createNewOrder, getAllAdvByCategory } from "../../services/api";
-import { Switch, Route } from "react-router-dom";
-
-import AdvForm from "../admin/AdvForm";
-import CartList from "../cart/CartList";
+import React, { Component, Suspense } from "react";
 import LaptopList from "../laptopList/LaptopList";
 import PhoneList from "../phoneList/PhoneList";
 import Section from "../section/Section";
 import { MainContainer } from "./MainStyled";
+import { Switch, Route } from "react-router-dom";
 import { mainRoutes } from "../../routes/mainRoutes";
+import { createNewOrder, getAllAdvByCategory } from "../../services/api";
 
 class Main extends Component {
   state = {
     cart: [],
     phones: [],
     laptops: [],
-    error: "К сожалению товары по данной категории отстутствуют",
+    error: "К сожалению товары по данной категории отсутствуют",
   };
 
   async componentDidMount() {
@@ -66,55 +63,50 @@ class Main extends Component {
 
   removeAllFromCart = () => this.setState({ cart: [] });
 
+  getData = (name) => {
+    switch (name) {
+      case "products":
+        return {
+          phones: this.state.phones,
+          laptops: this.state.laptops,
+          addToCart: this.addToCart,
+        };
+      case "cart":
+        return {
+          cart: this.state.cart,
+          removeFromCart: this.removeFromCart,
+          createOrder: this.createOrder,
+        };
+      case "administration":
+        return {
+          addNewAdv: this.addNewAdv,
+        };
+
+      default:
+        return {};
+    }
+  };
+
   render() {
-    const method = {
-      removeAllFromCart: this.removeAllFromCart,
-      createOrder: this.createOrder,
-      removeFromCart: this.removeFromCart,
-      addToCart: this.addToCart,
-      addNewAdv: this.addNewAdv,
-      // getLaptops: this.getLaptops,
-      // getPhones: this.getPhones,
-    };
     return (
       <MainContainer>
-        <Switch>
-          {mainRoutes.map(({ path, exact, component: MyComponent }) => (
-            <Route
-              path={path}
-              // component={route.component}
-              render={(props) => (
-                <MyComponent {...props} {...this.state} {...method} />
-              )}
-              exact={exact}
-              key={path}
-            />
-          ))}
-        </Switch>
-        {/* <Section title='Добавление нового объявления'>
-          <AdvForm addNewAdv={this.addNewAdv} />
-        </Section> */}
-        {/* <Section title='Корзина'>
-          <CartList
-            cart={this.state.cart}
-            removeFromCart={this.removeFromCart}
-            createOrder={this.createOrder}
-          />
-        </Section> */}
-        {/* <Section title='Мобильные телефоны'>
-          <PhoneList
-            phones={this.state.phones}
-            addToCart={this.addToCart}
-            error={this.state.error}
-          />
-        </Section>
-        <Section title='Ноутбуки'>
-          <LaptopList
-            laptops={this.state.laptops}
-            addToCart={this.addToCart}
-            error={this.state.error}
-          />
-        </Section> */}
+        <Suspense fallback={<h2>...loading</h2>}>
+          <Switch>
+            {mainRoutes.map(({ name, path, exact, component: MyComponent }) => (
+              <Route
+                path={path}
+                exact={exact}
+                render={(props) => (
+                  <MyComponent
+                    {...props}
+                    data={this.getData(name.toLowerCase())}
+                  />
+                )}
+                key={path}
+              />
+            ))}
+          </Switch>
+        </Suspense>
       </MainContainer>
     );
   }

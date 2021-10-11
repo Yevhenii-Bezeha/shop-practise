@@ -41,7 +41,7 @@ class Header extends Component {
         )}
         {isModalOpen && (
           <Modal hideModal={this.setModalState}>
-            <HeaderList data={this.props.data} />
+            <HeaderList data={this.props.data} hideModal={this.setModalState} />
           </Modal>
         )}
       </HeaderContainer>

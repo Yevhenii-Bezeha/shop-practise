@@ -1,40 +1,39 @@
 import React from "react";
-import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
 import { productsRoutes } from "../routes/productsRoutes";
+import { NavLink, Route, Switch } from "react-router-dom";
+import { ProductsPageContainer } from "./ProductsPageStyled";
+import Section from "../Components/section/Section";
 
-const ProductsPage = (ownProps) => {
-  const match = useRouteMatch();
+const ProductsPage = ({ match, data }) => {
   return (
-    <>
-      {/* <Section title="Мобильные телефоны">
-        <PhoneList phones={phones} addToCart={addToCart} error={error} />
-      </Section>
-      <Section title="Ноутбуки">
-        <LaptopList laptops={laptops} addToCart={addToCart} error={error} />
-      </Section> */}
-
-      <nav>
-        <ul>
-          {productsRoutes.map((route) => (
-            <li key={route.path}>
-              <NavLink to={match.url + route.path} exact={route.exact}>
-                {route.name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <ProductsPageContainer>
+      <ul className="navigationList">
+        {productsRoutes.map((route) => (
+          <li className="navigationListItem" key={route.path}>
+            <NavLink
+              to={match.url + route.path}
+              exact={route.exact}
+              className="navigationListItemAnchor"
+            >
+              {route.name}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
       <Switch>
-        {productsRoutes.map(({ path, exact, component: MyComponent }) => (
+        {productsRoutes.map(({ name, path, exact, component: MyComponent }) => (
           <Route
-            key={path}
-            path={match.url + path}
+            path={match.path + path}
             exact={exact}
-            render={(props) => <MyComponent {...props} {...ownProps} />}
+            render={() => (
+              <Section title={name}>
+                <MyComponent {...data} />
+              </Section>
+            )}
           />
         ))}
       </Switch>
-    </>
+    </ProductsPageContainer>
   );
 };
 

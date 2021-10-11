@@ -1,5 +1,5 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { ListItemContainer } from "./LaptopListItemStyled";
 
 const LaptopListItem = ({ laptop, addToCart }) => {
@@ -32,12 +32,12 @@ const LaptopListItem = ({ laptop, addToCart }) => {
 
 export default LaptopListItem;
 
-// LaptopListItem.propTypes = {
-//   laptop: PropTypes.shape({
-//     name: PropTypes.string,
-//     image: PropTypes.string,
-//     isSale: PropTypes.bool,
-//     description: PropTypes.string,
-//     price: PropTypes.string.isRequired,
-//   }),
-// };
+LaptopListItem.propTypes = {
+  laptop: PropTypes.shape({
+    name: PropTypes.string,
+    image: PropTypes.string,
+    isSale: PropTypes.bool,
+    description: PropTypes.string,
+    price: PropTypes.number.isRequired,
+  }),
+};

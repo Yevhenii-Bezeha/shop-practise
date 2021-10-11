@@ -1,44 +1,40 @@
-import AdminPage from "../pages/AdminPage";
-import AuthPage from "../pages/AuthPage";
-import CartPage from "../pages/CartPage";
-import HomePage from "../pages/HomePage";
-import ProductsPage from "../pages/ProductsPage";
+import { lazy } from "react";
 
 export const mainRoutes = [
   {
     name: "Home",
     path: "/",
-    component: HomePage,
+    component: lazy(() => import("../pages/HomePage")),
     exact: true,
   },
   {
     name: "Products",
     path: "/products",
-    component: ProductsPage,
+    component: lazy(() => import("../pages/ProductsPage")),
     exact: false,
   },
   {
     name: "Cart",
     path: "/cart",
-    component: CartPage,
+    component: lazy(() => import("../pages/CartPage")),
     exact: false,
   },
   {
     name: "Administration",
     path: "/admin",
-    component: AdminPage,
+    component: lazy(() => import("../pages/AdminPage")),
     exact: false,
   },
   {
     name: "Registration",
     path: "/registration",
-    component: AuthPage,
+    component: lazy(() => import("../pages/AuthPage")),
     exact: false,
   },
   {
     name: "Login",
     path: "/login",
-    component: AuthPage,
+    component: lazy(() => import("../pages/AuthPage")),
     exact: false,
   },
 ];

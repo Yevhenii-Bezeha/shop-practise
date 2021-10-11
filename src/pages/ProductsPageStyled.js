@@ -1,18 +1,12 @@
 import styled from "styled-components";
 
-export const HeaderNavigation = styled.nav`
+export const ProductsPageContainer = styled.div`
   .navigationList {
     list-style: none;
     display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: calc(100vh - 60px);
-    margin-top: 60px;
-    background-color: #424242;
-    align-items: center;
-    padding-top: 30px;
   }
   .navigationListItem {
+    padding: 10px 0;
     margin-top: 10px;
   }
   .navigationListItemAnchor {
@@ -22,6 +16,9 @@ export const HeaderNavigation = styled.nav`
     &:hover {
       color: #5f73a1;
     }
+  }
+  .navigationListItem:not(:last-child) {
+    margin-right: 20px;
   }
 
   @media (min-width: 768px) {
@@ -42,10 +39,6 @@ export const HeaderNavigation = styled.nav`
     }
     .navigationListItemActive {
       color: #5f73a1;
-    }
-
-    .navigationListItem:not(:last-child) {
-      margin-right: 20px;
     }
   }
 `;
