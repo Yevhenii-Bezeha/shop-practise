@@ -23,6 +23,7 @@ const ProductsPage = ({ match, data }) => {
       <Switch>
         {productsRoutes.map(({ name, path, exact, component: MyComponent }) => (
           <Route
+            key={path}
             path={match.path + path}
             exact={exact}
             render={() => (

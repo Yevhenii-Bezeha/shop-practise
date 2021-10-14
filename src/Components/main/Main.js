@@ -48,8 +48,24 @@ class Main extends Component {
     }));
   };
 
-  addToCart = (product) =>
-    this.setState((prev) => ({ cart: [...prev.cart, product] }));
+  addToCart = (product) => {
+    if (product.category === "laptops") {
+      this.setState((prev) => ({
+        ...this.state,
+        laptops: this.state.laptops.filter(
+          (laptop) => laptop.id !== product.id
+        ),
+        cart: [...prev.cart, product],
+      }));
+    }
+    if (product.category === "phones") {
+      this.setState((prev) => ({
+        ...this.state,
+        phones: this.state.phones.filter((phone) => phone.id !== product.id),
+        cart: [...prev.cart, product],
+      }));
+    }
+  };
 
   removeFromCart = (id) =>
     this.setState((prev) => ({
